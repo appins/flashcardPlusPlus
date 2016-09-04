@@ -45,9 +45,9 @@ int main(int argc, char *argv[]) {
     }
 
     // Flags
-    const unsigned char correctFormat { 0x01 };
-    const unsigned char correctAnswer { 0x02 };
-    const unsigned char isQuestion    { 0x04 };
+    constexpr unsigned char correctFormat { 0x01 };
+    constexpr unsigned char correctAnswer { 0x02 };
+    constexpr unsigned char isQuestion    { 0x04 };
 
     int correct{ 0 };
     int outOf{ static_cast<int>(lines.size()) + 1 };

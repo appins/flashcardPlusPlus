@@ -9,9 +9,9 @@ using namespace std;
 unsigned char inter(string line, int lineNum) {
 
   // Flags
-  const unsigned char correctFormat { 0x01 };
-  const unsigned char correctAnswer { 0x02 };
-  const unsigned char isQuestion    { 0x04 };
+  constexpr unsigned char correctFormat { 0x01 };
+  constexpr unsigned char correctAnswer { 0x02 };
+  constexpr unsigned char isQuestion    { 0x04 };
 
   unsigned char result{ 0x00 };
   result |= correctFormat;
@@ -23,7 +23,7 @@ unsigned char inter(string line, int lineNum) {
   }
 
   //                              Normal question
-  
+
   else if(line[0] == 'Q') {
     // Flag as question
     result |= isQuestion;

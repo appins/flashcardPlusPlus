@@ -16,6 +16,7 @@ Writing flashcards:
   Currently there are normal questions and multiple choice questions
 
   * Normal Questions
+
     Syntax: `Q question,answer`
 
     * Normal questions should always start with "Q"
@@ -24,6 +25,7 @@ Writing flashcards:
     Example: `Q what's the square root of 100?,10`
 
   * Multiple Choice
+  
     Syntax: `M question&choice1,choice2&answer`
 
       * Each part (question, choices, and answer) should have a '&' separating it

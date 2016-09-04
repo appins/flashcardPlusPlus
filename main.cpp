@@ -35,8 +35,12 @@ int main(int argc, char *argv[]) {
     // For each line, pass it to the function inter
     getline(flashcards, line);
     inter(line, 0);
+
+    string versionOnSet;
+    getline(flashcards, versionOnSet);
+
     vector<string> lines;
-    while( getline(flashcards, line )) {
+    while( getline(flashcards, line)) {
       lines.push_back(line);
     }
 
@@ -47,6 +51,11 @@ int main(int argc, char *argv[]) {
 
     int correct{ 0 };
     int outOf{ static_cast<int>(lines.size()) + 1 };
+
+    if( !lines.size() ){
+      cout << "No information in flashcard set" << endl;
+      exit(0);
+    }
 
     for(int i{ 0 }; i <= static_cast<int>(lines.size()); i++){
       unsigned char lineAnswer{ inter(lines[rand() % lines.size()], 1) };
@@ -63,8 +72,6 @@ int main(int argc, char *argv[]) {
     }
 
     cout << endl << endl << correct << " out of " << outOf << " correct";
-
-
 
   }
 

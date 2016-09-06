@@ -7,7 +7,7 @@
 #include <vector>
 #include "fcard.hpp"
 
-typedef unsigned short version_t ;
+typedef unsigned short version_t;
 
 using namespace std;
 
@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   srand(time(NULL));
 
   // Serialized version, write this to file
-  version_t version{ 1 };
+  version_t version{ 2 };
 
   // Open the flashcard set (should be named "set.flashcard")
   // Unless command line argument says otherwise

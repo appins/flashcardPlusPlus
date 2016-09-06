@@ -53,5 +53,14 @@ Or on windows systems, fire up a CMD and type
 
   The writer should come with instructions on how to use it
 
+## Opening custom flashcard files
+  All Flashcard++ files must begin with "Flashcard++, by App1ns"
+  To open custom files, pass their relative paths though the command line
+
+  There is even a special makefile target for this
+
+  `make build` and `make build_win`
+
+  Currently there is no such support with the writer, I will do that soon though
 
 Need help? Found a bug? Email AlexAndersonOne@gmail.com with details!

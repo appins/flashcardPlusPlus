@@ -1,0 +1,166 @@
+#include <iostream>
+#include <stdlib.h>
+#include <stdio.h>
+#include <fstream>
+#include <algorithm>
+#include <vector>
+#include <sstream>
+
+using namespace std;
+
+typedef unsigned short version_t;
+
+int main(){
+  // Serialized version number
+  version_t version{ 2 };
+
+  // Input and output file stream
+  ifstream flashcardset{ "flashcard.set" };
+  ofstream writefcardset;
+
+  // Check if ifstream exists
+  if(flashcardset.is_open()){
+    cout << "Found flashcard.set" << endl;
+
+    flashcardset.close();
+  }
+
+  // If not, create it
+  else{
+
+    cout << "Creating flashcard.set..." << endl;
+
+    ofstream flashcards{ "flashcard.set" };
+    flashcards << "Flashcard++, by App1ns" << endl;
+    flashcards << "v" << version;
+    flashcards << endl;
+
+    cout << "Done, please restart the program..." << endl;
+
+    flashcards.close();
+
+    exit(0);
+  }
+
+  // Open it (in append mode)
+  writefcardset.open("flashcard.set", fstream::app);
+
+  bool userQuit{ false };
+
+  while( !userQuit ){
+    // Get user input
+    cout << endl << "Writing a flashcard";
+    cout << endl << "(M)ultiple Choice, (Q)uestion, or 'Quit': ";
+    string userInput;
+    cin >> userInput;
+
+    // User input to uppercase
+    std::transform(userInput.begin(), userInput.end(),userInput.begin(), ::toupper);
+
+    // If user decided to quit
+    if(userInput == "QUIT" || userInput == "'QUIT'"){
+      userQuit = true;
+    }
+
+    // If user chose multiple choice
+    else if(userInput == "M" || userInput == "MULTIPLE" ||
+      userInput == "MULTIPLE CHOICE" || userInput == "(M)ultiple Choice"){
+        string multichoice{ "M " };
+
+        cin.clear();
+        cin.ignore(10000, '\n');
+
+        cout << "Question: ";
+        string question;
+        getline(cin, question);
+
+        multichoice += question + "&";
+
+        cout << "Enter '.' to stop inputting possible answers" << endl;
+
+        // Vector of strings for answers
+        std::vector<string> answers;
+
+        // Char 65 is 'A' so 66 is 'B' and so fourth
+        char i{ 65 };
+        string pAns;
+
+        do{
+          cout << "Possible answer: ";
+
+          getline(cin, pAns);
+
+          // Automatic extentions
+          stringstream ss;
+          ss << i;
+          ss << ": ";
+          ss << pAns;
+
+          // Push back into vector
+          answers.push_back(ss.str());
+
+          i++;
+      }while(pAns[0] != '.' && i <= (26 + 65));
+
+        // Make sure vector ends with a '.'
+        answers.push_back(".");
+
+        // For every item in answers (Without a '.'), append it to multichoice
+        for(string i: answers){
+          if(i[3] != '.'){
+            multichoice += i + ",";
+          }
+          else{
+            break;
+          }
+        }
+
+        // Trim off the extra ',' and add another '&' for the answer
+        multichoice = multichoice.substr(0, multichoice.size() - 1 );
+        multichoice += "&";
+
+        // Get the real answer
+        cout << "What is the real answer? (Should be in possible answers): ";
+        string answer;
+        getline(cin, answer);
+        multichoice += answer;
+
+        // Write to file
+        writefcardset << multichoice << endl;
+
+        cout << "Written to file";
+
+    }
+
+    // If user chose a normal question type
+    else if(userInput == "Q" || userInput == "QUESTION" ||
+      userInput == "(Q)uestion"){
+        string flashQuestion{ "Q " };
+
+        cin.clear();
+        cin.ignore(10000, '\n');
+
+        cout << "Question: ";
+        string question;
+        getline(cin, question);
+
+        flashQuestion += question;
+        flashQuestion += ",";
+
+        cout << "Answer: ";
+        string answer;
+        getline(cin, answer);
+
+        flashQuestion += answer;
+
+        writefcardset << flashQuestion << endl;
+
+        cout << "Written to file" << endl;
+
+      }
+  }
+
+  writefcardset.close();
+
+  return 0;
+}

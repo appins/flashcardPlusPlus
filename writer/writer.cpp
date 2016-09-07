@@ -50,7 +50,7 @@ int main(){
   while( !userQuit ){
     // Get user input
     cout << endl << "Writing a flashcard";
-    cout << endl << "(M)ultiple Choice, (Q)uestion, or 'Quit': ";
+    cout << endl << "(M)ultiple Choice, (Q)uestion, (T)rue/False, or 'Quit': ";
     string userInput;
     cin >> userInput;
 
@@ -158,6 +158,53 @@ int main(){
         cout << "Written to file" << endl;
 
       }
+    // True or false question
+    else if(userInput[0] == 'T'){
+
+      cout << "True or false flashcard" << endl;
+
+      cin.clear();
+      cin.ignore(10000, '\n');
+
+      cout << "Question: ";
+      string oQuestion;
+      getline(cin, oQuestion);
+
+      cout << "Press enter to continute...";
+
+      cin.clear();
+      cin.ignore(10000, '\n');
+
+      string answer;
+      bool answerIsValid{ false };
+      bool answerType;
+
+      cout << "Answer: ";
+      do{
+        getline(cin, answer);
+        if(toupper(answer[0]) == 'F' || toupper(answer[0]) == '0' || toupper(answer[0]) == 'N'){
+          answerIsValid = true;
+          answerType = false;
+        }
+        else if(toupper(answer[0]) == 'T' || toupper(answer[0]) == '1' || toupper(answer[0]) == 'Y'){
+          answerIsValid = true;
+          answerType = true;
+        }
+        else{
+          answerIsValid = false;
+          cout << "Answer: ";
+        }
+      }
+      while( !answerIsValid );
+
+      string flashcardS = (answerType) ? "T " : "F ";
+
+      flashcardS += oQuestion;
+
+      writefcardset << flashcardS << endl;
+
+      cout << "Written to file";
+    }
   }
 
   writefcardset.close();

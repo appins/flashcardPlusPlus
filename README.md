@@ -40,7 +40,7 @@ Or on windows systems, fire up a CMD and type
 
 ## Using the writer:
 
-  Instead of writing flashcards by yourself, just fire up the writer and get going.
+  Instead of writing flashcards by hand, just fire up the writer and get going.
 
   To get the writer fired up, rev up a terminal and type
   ```sh
@@ -59,7 +59,7 @@ Or on windows systems, fire up a CMD and type
 
   There is even a special makefile target for this
 
-  `make build` and `make build_win`
+  `make build` and `make build_win` compile the program but don't run it
 
   Currently there is no such support with the writer, I will do that soon though
 

@@ -19,12 +19,12 @@ unsigned char inter(string line, int lineNum) {
   // Make sure the first line of the file is correct
   if(lineNum == 0 && line != "Flashcard++, by App1ns") {
     cout << "File error, first line was incorrect!";
-    return 0x00;
+    result &= ~correctFormat;
   }
 
   //                              Normal question
 
-  else if(line[0] == 'Q') {
+  else if(line[0] == 'Q' && line[1] == ' ') {
     // Flag as question
     result |= isQuestion;
 
@@ -66,11 +66,11 @@ unsigned char inter(string line, int lineNum) {
 
   //                              Multiple choice question
 
-  else if(line[0] == 'M'){
+  else if(line[0] == 'M' && line[1] == ' '){
     // Flag as question
     result |= isQuestion;
 
-    cout << "Multiple Choice" << endl;
+    cout << "Multiple choice" << endl;
 
     // Clear cin if failed
     if(cin.fail()){
@@ -121,5 +121,62 @@ unsigned char inter(string line, int lineNum) {
 
   }
 
+  //                              True / false question (That is true)
+  else if(line[0] == 'T' && line[1] == ' '){
+    // Flag
+    result |= isQuestion;
+
+    cout << "True or false" << endl;
+
+    // Get question
+    stringstream liness{ line.substr(2, line.size()) };
+    string question;
+    getline(liness, question);
+    cout << '\t' << question;
+
+    // Ask for answer
+    cout << endl << "Answer: ";
+    string ans;
+    getline(cin, ans);
+
+    char ansChar = toupper(ans[0]);
+
+    if(ansChar == '1' || ansChar == 'T' || ansChar == 'Y'){
+      cout << "Good job!" << endl << endl;
+      result |= correctAnswer;
+    }
+    else{
+      cout << "The real answer was true" << endl;
+    }
+  }
+
+  //                              True / false question (That is false)
+  else if(line[0] == 'F' && line[1] == ' '){
+    // Flag
+    result |= isQuestion;
+
+    cout << "True or false" << endl;
+
+    // Get question
+    stringstream liness{ line.substr(2, line.size()) };
+    string question;
+    getline(liness, question);
+    cout << '\t' << question;
+
+    // Ask for answer
+    cout << endl << "Answer: ";
+    string ans;
+    getline(cin, ans);
+
+    char ansChar = toupper(ans[0]);
+
+    if(ansChar == '0' || ansChar == 'F' || ansChar == 'N'){
+      cout << "Good job!" << endl << endl;
+      result |= correctAnswer;
+    }
+    else{
+      cout << "The real answer was false" << endl;
+    }
+  }
   return result;
 }

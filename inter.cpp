@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
+#include <ctime>
 #include <iostream>
 #include <sstream>
 #include <algorithm>
@@ -7,6 +10,8 @@ using namespace std;
 
 // Interpret line values
 unsigned char inter(string line, int lineNum) {
+
+  srand(time(NULL));
 
   // Flags
   constexpr unsigned char correctFormat { 0x01 };
@@ -139,6 +144,7 @@ unsigned char inter(string line, int lineNum) {
     string ans;
     getline(cin, ans);
 
+    // Get smart answer
     char ansChar = toupper(ans[0]);
 
     if(ansChar == '1' || ansChar == 'T' || ansChar == 'Y'){
@@ -168,6 +174,7 @@ unsigned char inter(string line, int lineNum) {
     string ans;
     getline(cin, ans);
 
+    // Get smart answer
     char ansChar = toupper(ans[0]);
 
     if(ansChar == '0' || ansChar == 'F' || ansChar == 'N'){
@@ -176,6 +183,79 @@ unsigned char inter(string line, int lineNum) {
     }
     else{
       cout << "The real answer was false" << endl;
+    }
+  }
+  //                              Random order multichoice question ((S)mart-(M)ultichoice)
+  // This does not break backwards compatibility
+  else if(line.substr(0, 3) == "SM "){
+    // Flag
+    result |= isQuestion;
+
+    stringstream liness{ line.substr(3, line.size()) };
+
+    // Ask question
+    string question;
+    getline(liness, question, '&');
+    cout << question << endl;
+
+    // Get all possible answers
+    string pAns;
+    getline(liness, pAns, '&');
+    stringstream pAnswerss{ pAns };
+
+    // Vector of answers
+    string pAn;
+    std::vector<string> pAnswers;
+    while(getline(pAnswerss, pAn, ',')){
+      pAnswers.push_back(pAn);
+
+    };
+
+    // Get the real answer
+    string realAns;
+    getline(liness, realAns, '&');
+    pAnswers.push_back(realAns);
+
+    char x{ 'A' };
+
+    char corrAns{ 'Z' };
+
+    // Display all answers with a letter prefix
+    while(pAnswers.size() > 0){
+      // Char for prefix, check if more than 'Z'
+      if(x > 'Z'){
+        break;
+      }
+
+      // Random item in vector
+      cout << '\t' << x << ": ";
+      int nOfAns = rand() % pAnswers.size();
+
+      // Display possible answer
+      cout << pAnswers[nOfAns] << endl;
+
+      if(pAnswers[nOfAns] == realAns){
+        corrAns = x;
+      }
+
+      // Delete from vector
+      pAnswers.erase( pAnswers.begin() + nOfAns );
+
+      x++;
+    }
+
+    cout << "Answer: ";
+
+    string uAnswer;
+    getline(cin, uAnswer);
+
+    // Check for right answer, accept both types of input
+    if(uAnswer == realAns || (corrAns == toupper(uAnswer[0]) && uAnswer[1] == '\0') ){
+      cout << "Good job!" << endl;
+      result |= correctAnswer;
+    }
+    else{
+      cout << "Oops, the real answer was " << corrAns << endl;
     }
   }
   return result;

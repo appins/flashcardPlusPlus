@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
   srand(time(NULL));
 
   // Serialized version, write this to file
-  version_t version{ 3 };
+  version_t version{ 4 };
 
   // Open the flashcard set (should be named "set.flashcard")
   // Unless command line argument says otherwise

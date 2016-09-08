@@ -28,16 +28,18 @@ Or on windows systems, fire up a CMD and type
 
     Example: `Q what's the square root of 100?,10`
 
-  * Multiple Choice
+  * Multiple Choice (Updated, but old syntax will still work)
 
-    Syntax: `M question&choice1,choice2&answer`
+    Syntax: `SM question&wronganswer,wronganswer&rightanswer`
 
-      * Each part (question, choices, and answer) should have a '&' separating it
+      * Each part (question, wrong answers, and correct answer) should have a '&' separating it
       * Each choice should have a comma separating it
-      * Make sure to put the title of the choice before the choice, like "A: 10"
       * Case insensitive
+      * Works with both prefix and answer (So 'D' and '17' would both be valid)
+      * Auto prefix's choices with letter
+      * Randomized order
 
-      Example: `M Which number is prime?&A: 4,B: 15, C: 21, D: 17&D`
+      Example: `SM Which number is prime?&4,15,21&17`
 
   * True / False questions
 
@@ -49,7 +51,6 @@ Or on windows systems, fire up a CMD and type
 
       Examples: `T Is C++ better than Java?`
                 `F Is the square root of n always n/10?`
-
 
 ## Using the writer:
 

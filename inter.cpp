@@ -244,10 +244,14 @@ unsigned char inter(string line, int lineNum) {
       x++;
     }
 
+    // Get user answer
     cout << "Answer: ";
 
     string uAnswer;
     getline(cin, uAnswer);
+
+    // Case insensitive
+    std::transform(uAnswer.begin(), uAnswer.end(),uAnswer.begin(), ::toupper);
 
     // Check for right answer, accept both types of input
     if(uAnswer == realAns || (corrAns == toupper(uAnswer[0]) && uAnswer[1] == '\0') ){

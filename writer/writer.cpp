@@ -12,7 +12,7 @@ typedef unsigned short version_t;
 
 int main(){
   // Serialized version number
-  version_t version{ 2 };
+  version_t version{ 5 };
 
   // Input and output file stream
   ifstream flashcardset{ "flashcard.set" };
@@ -65,7 +65,7 @@ int main(){
     // If user chose multiple choice
     else if(userInput == "M" || userInput == "MULTIPLE" ||
       userInput == "MULTIPLE CHOICE" || userInput == "(M)ultiple Choice"){
-        string multichoice{ "M " };
+        string multichoice{ "SM " };
 
         cin.clear();
         cin.ignore(10000, '\n');
@@ -76,38 +76,32 @@ int main(){
 
         multichoice += question + "&";
 
-        cout << "Enter '.' to stop inputting possible answers" << endl;
+        cout << "Enter '.' to stop inputting wrong answers" << endl;
 
         // Vector of strings for answers
         std::vector<string> answers;
 
-        // Char 65 is 'A' so 66 is 'B' and so fourth
-        char i{ 65 };
+        char i{ 0 };
         string pAns;
 
+        // Get possible answers
         do{
-          cout << "Possible answer: ";
+          i++;
+
+          cout << "Wrong answer: ";
 
           getline(cin, pAns);
 
-          // Automatic extentions
-          stringstream ss;
-          ss << i;
-          ss << ": ";
-          ss << pAns;
-
           // Push back into vector
-          answers.push_back(ss.str());
-
-          i++;
-      }while(pAns[0] != '.' && i <= (26 + 65));
+          answers.push_back(pAns);
+      }while(pAns != "." && i < 26);
 
         // Make sure vector ends with a '.'
         answers.push_back(".");
 
         // For every item in answers (Without a '.'), append it to multichoice
         for(string i: answers){
-          if(i[3] != '.'){
+          if(i[0] != '.'){
             multichoice += i + ",";
           }
           else{
@@ -120,7 +114,7 @@ int main(){
         multichoice += "&";
 
         // Get the real answer
-        cout << "What is the real answer? (Should be in possible answers): ";
+        cout << "What is the real answer? ";
         string answer;
         getline(cin, answer);
         multichoice += answer;

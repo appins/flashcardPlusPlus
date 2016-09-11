@@ -16,7 +16,7 @@ Or on windows systems, fire up a CMD and type
 
 ## Writing flashcards:
 
-  Currently there are normal questions and multiple choice questions
+  Currently there are normal questions, multiple choice questions, and true or false question
 
   * Normal Questions
 

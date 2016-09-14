@@ -5,7 +5,7 @@ To get started fire up a terminal and type
 ```sh
     git clone git@github.com:AppIns/flashcardPlusPlus.git
     cd flashcardPlusPlus
-    make unix
+    make 
 ```
 Or on windows systems, fire up a CMD and type
 ```sh

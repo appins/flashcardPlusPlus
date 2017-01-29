@@ -59,13 +59,13 @@ int main(int argc, char *argv[]) {
 
     for(int i{ 0 }; i <= static_cast<int>(lines.size()); i++){
       unsigned char lineAnswer{ inter(lines[rand() % lines.size()], 1) };
-      if(lineAnswer & correctAnswer){
+      if(lineAnswer && correctAnswer){
         correct++;
       }
-      if( ! (lineAnswer & isQuestion) ){
+      if( ! (lineAnswer && isQuestion) ){
         outOf--;
       }
-      if( ! (lineAnswer & correctFormat) ){
+      if( ! (lineAnswer && correctFormat) ){
         cout << "Error";
         break;
       }
